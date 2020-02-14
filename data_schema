@@ -1,0 +1,31 @@
+User:
+
+  username | pw | email | resume_id
+-------------------------------------
+
+
+Resume:
+
+{
+    name
+    phoneNumber
+    email
+
+    section {
+        sectionTitle:
+        items: [
+            {
+                itemTitle
+                itemCaption
+                date
+                bulletPoints: [
+                    {
+                        text
+                    }
+                ]
+            }
+        ]
+    }
+}
+
+  
