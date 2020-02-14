@@ -4,5 +4,17 @@
         <ContactInfo />
     </ContactBlock>
     <Skills />
-    <Generic>
+    <GenericSection> 
+        project={!!project} 
+        headTitle={headTitle} 
+        itemTitle={itemTitle} 
+        itemCaption={itemCaption}
+        date={date}
+        bulletPoints={bulletPoints}
+    >
+        <GenericSectionTitle headTitle={props.headTitle} />
+        <GenericItemTitle itemTitle={props.itemTitle} project={props.project} date={props.date}/>
+        <GenericItemCaption itemCaption={props.itemCaption} />
+        {/* props.bulletPoints.map( bulletPoint => <BulletPoint text={bulletPoint} > ) */}
+    </GenericSection>
 </Resume>

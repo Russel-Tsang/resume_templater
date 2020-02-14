@@ -1,0 +1,7 @@
+.block {
+    border: 1px black solid;
+}
+
+.contact-info {
+    display: flex;
+}

@@ -2,8 +2,8 @@ import React from 'react';
 
 const Title = (props) => {
     return (  
-        <div id="title">
-            {props.title}
+        <div className="title block">
+            {props.value}
         </div>
     );
 }
