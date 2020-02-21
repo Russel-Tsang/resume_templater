@@ -1,7 +1,58 @@
-.block {
+#app-body {
+    width: 800px;
     border: 1px black solid;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.slot-and-block {
+    position: relative;
+}
+
+.block {
+    background-color: white;
+    /* border-bottom: 1px grey solid; */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.slot {
+    background-color: black;    
+    opacity: 0.4;   
+}
+
+.name {
+    text-align: center;
+    font-size: 28px;
 }
 
 .contact-info {
     display: flex;
+    justify-content: space-evenly;
+}
+
+.drag-wrap {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+}
+
+.drop-wrap {
+    width: 100%;
+    top: 0;
+}
+
+.section-title {
+    text-decoration: underline;
+    font-size: 20px;
+}
+
+.item-title-with-date {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bullet-point {
+    padding-left: 40px;
 }
