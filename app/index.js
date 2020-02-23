@@ -10,7 +10,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        // Some dummy data; we'll be receiving this data 
+        // Some dummy data; we'll be receiving this data from some data storage later on
         const { NAME, CONTACT_INFO, SECTION_TITLE, ITEM_TITLE_WITH_DATE, ITEM_CAPTION, BULLET_POINT, SPACE_BLOCK } = BlockTypes;
         this.state = {
             resume: [
@@ -51,23 +51,23 @@ class App extends React.Component {
         this.setState({ resume, draggingBlockIdx: null, slotIdx: null });
     }
 
-    // for each object in this.state.resume, return correct component
-    // passing along callbacks for dragging and dropping events
-    slotAndBlocks() {
-        return this.state.resume.map((block, idx) => {
+
+
+    render() {
+        // for each object in this.state.resume, return correct component
+        // while passing along callbacks for dragging and dropping events
+        const slotAndBlocks = this.state.resume.map((block, idx) => {
             const blockOptions = {
                 dropAction: this.setBlockIdx,
                 onMouseDown: this.setBlockIdx,
             }
             return componentFor(Object.assign(block, blockOptions), idx)
         });
-    }
 
-    render() {
         return (
             <DndProvider backend={Backend}>
                 <div id="app-body">
-                    {this.slotAndBlocks()}
+                    {slotAndBlocks}
                 </div>
             </DndProvider>
         )
