@@ -45,19 +45,17 @@ export const componentFor = function(blockOptions, idx) {
                 <DroppableSlotAndBlock
                     key={idx}
                     acceptType={ItemTypes.BLOCK}
-                    dropAction={blockOptions.dropAction}
-                    slotIdx={idx}
-                    dropWrapStyle={ BlockStyles[blockOptions.type] }
+                    dropAction={() => blockOptions.dropAction(idx, 'slot')}
+                    dropWrapStyle={BlockStyles[blockOptions.type]}
                 >
                     <DraggableBlock
                         itemType={ItemTypes.BLOCK}
                         typeOfBlock={blockOptions.type}
                         value={blockOptions.text}
-                        blockIdx={idx}
-                        onMouseDown={blockOptions.onMouseDown}
-                        blockStyle={ BlockStyles[blockOptions.type] }
+                        onMouseDown={() => blockOptions.onMouseDown(idx, 'draggingBlock')}
+                        blockStyle={BlockStyles[blockOptions.type]}
                     />
-                    <Slot slotStyle={ BlockStyles[blockOptions.type] }/>
+                    <Slot slotStyle={BlockStyles[blockOptions.type]}/>
                 </DroppableSlotAndBlock>
             );
         case CONTACT_INFO:
@@ -66,8 +64,7 @@ export const componentFor = function(blockOptions, idx) {
                 <DroppableSlotAndBlock
                     key={idx}
                     acceptType={ItemTypes.BLOCK}
-                    dropAction={blockOptions.dropAction}
-                    slotIdx={idx}
+                    dropAction={() => blockOptions.dropAction(idx, 'slot')}
                     dropWrapStyle={BlockStyles[blockOptions.type]}
                 >
                     <DraggableContactInfo
@@ -76,8 +73,7 @@ export const componentFor = function(blockOptions, idx) {
                         address={blockOptions.address}
                         email={blockOptions.email}
                         phoneNumber={blockOptions.phoneNumber}
-                        blockIdx={idx}
-                        onMouseDown={blockOptions.onMouseDown}
+                        onMouseDown={() => blockOptions.onMouseDown(idx, 'draggingBlock')}
                         blockStyle={BlockStyles[blockOptions.type]}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]}/>
@@ -89,8 +85,7 @@ export const componentFor = function(blockOptions, idx) {
                 <DroppableSlotAndBlock
                     key={idx}
                     acceptType={ItemTypes.BLOCK}
-                    dropAction={blockOptions.dropAction}
-                    slotIdx={idx}
+                    dropAction={() => blockOptions.dropAction(idx, 'slot')}
                     dropWrapStyle={BlockStyles[blockOptions.type]}
                 >
                     <DraggableItemTitleWithDate
@@ -98,8 +93,7 @@ export const componentFor = function(blockOptions, idx) {
                         typeOfBlock={blockOptions.type}
                         itemTitle={blockOptions.itemTitle}
                         date={blockOptions.date}
-                        blockIdx={idx}
-                        onMouseDown={blockOptions.onMouseDown}
+                        onMouseDown={() => blockOptions.onMouseDown(idx, 'draggingBlock')}
                         blockStyle={BlockStyles[blockOptions.type]}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]} />

@@ -2,10 +2,12 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 
 const DropWrap = Component => props => {
+    const { acceptType, dropCondition, dropAction, dropWrapStyle } = props;
+
     const [{ isOver, canDrop }, dropRef] = useDrop({
-        accept: props.acceptType,
-        canDrop: props.dropCondition || function() { return true } ,
-        drop: () => props.dropAction(props.slotIdx, 'slot'),
+        accept: acceptType,
+        canDrop: dropCondition || function() { return true } ,
+        drop: dropAction,
         collect: monitor => ({ 
             isOver: !!monitor.isOver(), 
             canDrop: !!monitor.canDrop() ,
@@ -13,7 +15,7 @@ const DropWrap = Component => props => {
     });
 
     return (
-        <div className="drop-wrap" ref={dropRef} style={props.dropWrapStyle}>
+        <div className="drop-wrap" ref={dropRef} style={dropWrapStyle}>
             <Component {...props} />
         </div>
     );

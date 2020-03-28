@@ -27,24 +27,23 @@ class App extends React.Component {
                 { type: BULLET_POINT, text: 'Nori grape silver beet broccoli kombu beet greens quandong swiss' },
                 { type: BULLET_POINT, text: 'Celery quandong swiss chard chicory earthnut pea potato' },
             ],
-            // index of block currently being dragged
-            draggingBlockIdx: null,
-            slotIdx: null
+            draggingBlockIdx: null, // index of block currently being dragged
+            slotIdx: null, // index of block being dropped on 
         }
 
         this.setBlockIdx = this.setBlockIdx.bind(this);
     }
 
-    // set index state of respective item
-    // if type === 'slot', then user must've attempted block-switch
-    // so call this.dropAction after setting slotIdx state
+    // set index state of respective item (draggingBlockIdx or slotIdx)
+    //// if type === 'slot', then user must've attempted block-switch
+    //// so set slotIdx state, and then switch blocks 
     setBlockIdx(idx, type) {
         if (type === 'draggingBlock') this.setState({ draggingBlockIdx: idx });
-        else if (type === 'slot') this.setState({ slotIdx: idx }, this.dropAction);
+        else if (type === 'slot') this.setState({ slotIdx: idx }, this.switchBlocks);
     }
 
     // swap blocks based on state indices, reset draggingBlockIdx and slotIdx to null
-    dropAction() {
+    switchBlocks() {
         const { draggingBlockIdx, slotIdx } = this.state;
         let resume = this.state.resume.slice();
         [resume[draggingBlockIdx], resume[slotIdx]] = [resume[slotIdx], resume[draggingBlockIdx]];

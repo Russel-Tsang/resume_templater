@@ -2,8 +2,10 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 
 const DragWrap = Component => props => {
+    const { itemType, onMouseDown } = props;
+
     const [{ isDragging }, dragRef] = useDrag({
-        item: { type: props.itemType },
+        item: { type: itemType },
         collect: monitor => ({ isDragging: !!monitor.isDragging() }),
     });
 
@@ -11,7 +13,7 @@ const DragWrap = Component => props => {
     // if (isDragging) props.setDraggingBlockIdx(props.idx);
 
     return ( 
-        <div className="drag-wrap" ref={dragRef} onMouseDown={() => props.onMouseDown(props.blockIdx, 'draggingBlock')}>
+        <div ref={dragRef} className="drag-wrap" onMouseDown={onMouseDown}>
             <Component isDragging={isDragging} {...props}/>
         </div>
     );
