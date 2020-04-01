@@ -2,7 +2,7 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 
 const DropWrap = Component => props => {
-    const { acceptType, dropCondition, dropAction, dropWrapStyle } = props;
+    const { acceptType, dropCondition, dropAction } = props;
 
     const [{ isOver, canDrop }, dropRef] = useDrop({
         accept: acceptType,
@@ -15,7 +15,7 @@ const DropWrap = Component => props => {
     });
 
     return (
-        <div className="drop-wrap" ref={dropRef} style={dropWrapStyle}>
+        <div className="drop-wrap" ref={dropRef}>
             <Component {...props} />
         </div>
     );
