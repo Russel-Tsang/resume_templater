@@ -4,8 +4,8 @@ const Block = (props) => {
     if (props.isDragging) return null;
     return (
         <div className={`${props.typeOfBlock} block`} style={props.blockStyle}>
-            {/* {props.value} */}
-            <input key={props.key} className="resume-input" value={props.value} onChange={(e) => props.onResumeEdit(e.target.value)}/>
+            {props.value}
+            {/* <input key={props.key} className="resume-input" value={props.value} onChange={(e) => props.onResumeEdit(e.target.value)} /> */}
         </div>
     );
 }
