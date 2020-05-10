@@ -50,7 +50,14 @@ class App extends React.Component {
         this.setState({ resume, draggingBlockIdx: null, slotIdx: null });
     }
 
-
+    // onChange handler that changes state of resume as user types into input field
+    onResumeEdit(idx) {
+        return (inputText) => {
+            let resume = this.state.resume.slice();
+            resume[idx].text = inputText;
+            this.setState({ resume });
+        }
+    }
 
     render() {
         // for each object in this.state.resume, return correct component
@@ -59,15 +66,19 @@ class App extends React.Component {
             const blockOptions = {
                 dropAction: this.setBlockIdx,
                 onMouseDown: this.setBlockIdx,
+                onResumeEdit: this.onResumeEdit(idx)
             }
             return componentFor(Object.assign(block, blockOptions), idx)
         });
 
         return (
             <DndProvider backend={Backend}>
-                <div id="app-body">
+                <div id="app-body" onClick={() => console.log('hello')}>
                     {slotAndBlocks}
                 </div>
+                {this.state.resume.map((resume, idx) => (
+                    <input className="resume-input" value={resume.text} onChange={(e) => this.onResumeEdit(idx)(e.target.value)} />
+                ))}
             </DndProvider>
         )
     }
