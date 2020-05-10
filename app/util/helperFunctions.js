@@ -3,18 +3,10 @@ import DragWrap from "../components/wrappers/DragWrap";
 import DropWrap from "../components/wrappers/DropWrap";
 import Block from "../components/blocks/Block";
 import Slot from "../components/blocks/Slot";
-import SlotAndBlock from "../components/wrappers/SlotAndBlock";
+import SlotAndBlock from "../components/blocks/SlotAndBlock";
 import ContactInfo from "../components/blocks/ContactInfo";
 import ItemTitleWithDate from "../components/blocks/ItemTitleWithDate";
 import { BlockTypes, ItemTypes, BlockStyles } from "../constants/constants";
-
-/************************************
- Higher order functions to return a 
- draggable/droppable component
- ************************************/
-
-const dragify = (component) => DragWrap(component);
-const dropify = (component) => DropWrap(component);
 
 /************************************
  FUTURE: Function to flatten JSON
@@ -33,22 +25,20 @@ const dropify = (component) => DropWrap(component);
  
 export const componentFor = function(blockOptions, idx) {
     const { NAME, CONTACT_INFO, SECTION_TITLE, ITEM_TITLE_WITH_DATE, ITEM_CAPTION, BULLET_POINT, SPACE_BLOCK } = BlockTypes;
-    const DroppableSlotAndBlock = dropify(SlotAndBlock);
     switch(blockOptions.type) {
         case NAME:
         case ITEM_CAPTION:
         case BULLET_POINT:
         case SECTION_TITLE:
         case SPACE_BLOCK:
-            const DraggableBlock = dragify(Block);
             return (
-                <DroppableSlotAndBlock
+                <SlotAndBlock
                     key={idx}
                     acceptType={ItemTypes.BLOCK}
                     dropAction={() => blockOptions.dropAction(idx, 'slot')}
                     dropWrapStyle={BlockStyles[blockOptions.type]}
                 >
-                    <DraggableBlock
+                    <Block
                         key={`block-${idx}`}
                         itemType={ItemTypes.BLOCK}
                         typeOfBlock={blockOptions.type}
@@ -58,18 +48,17 @@ export const componentFor = function(blockOptions, idx) {
                         blockStyle={BlockStyles[blockOptions.type]}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]}/>
-                </DroppableSlotAndBlock>
+                </SlotAndBlock>
             );
         case CONTACT_INFO:
-            const DraggableContactInfo = dragify(ContactInfo);
             return (
-                <DroppableSlotAndBlock
+                <SlotAndBlock
                     key={idx}
                     acceptType={ItemTypes.BLOCK}
                     dropAction={() => blockOptions.dropAction(idx, 'slot')}
                     dropWrapStyle={BlockStyles[blockOptions.type]}
                 >
-                    <DraggableContactInfo
+                    <ContactInfo
                         itemType={ItemTypes.BLOCK}
                         typeOfBlock={blockOptions.type}
                         address={blockOptions.address}
@@ -79,18 +68,17 @@ export const componentFor = function(blockOptions, idx) {
                         blockStyle={BlockStyles[blockOptions.type]}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]}/>
-                </DroppableSlotAndBlock>
+                </SlotAndBlock>
             );
         case ITEM_TITLE_WITH_DATE:
-            const DraggableItemTitleWithDate = dragify(ItemTitleWithDate);
             return (
-                <DroppableSlotAndBlock
+                <SlotAndBlock
                     key={idx}
                     acceptType={ItemTypes.BLOCK}
                     dropAction={() => blockOptions.dropAction(idx, 'slot')}
                     dropWrapStyle={BlockStyles[blockOptions.type]}
                 >
-                    <DraggableItemTitleWithDate
+                    <ItemTitleWithDate
                         itemType={ItemTypes.BLOCK}
                         typeOfBlock={blockOptions.type}
                         itemTitle={blockOptions.itemTitle}
@@ -99,7 +87,7 @@ export const componentFor = function(blockOptions, idx) {
                         blockStyle={BlockStyles[blockOptions.type]}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]} />
-                </DroppableSlotAndBlock>
+                </SlotAndBlock>
             );
     }
 }
