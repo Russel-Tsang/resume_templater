@@ -49,10 +49,12 @@ export const componentFor = function(blockOptions, idx) {
                     dropWrapStyle={BlockStyles[blockOptions.type]}
                 >
                     <DraggableBlock
+                        key={`block-${idx}`}
                         itemType={ItemTypes.BLOCK}
                         typeOfBlock={blockOptions.type}
                         value={blockOptions.text}
                         onMouseDown={() => blockOptions.onMouseDown(idx, 'draggingBlock')}
+                        onResumeEdit={blockOptions.onResumeEdit}
                         blockStyle={BlockStyles[blockOptions.type]}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]}/>
