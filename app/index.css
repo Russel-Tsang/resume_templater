@@ -5,6 +5,11 @@
     padding-left: 40px;
     padding-right: 40px;
     margin: 0 auto;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+input {
+    font-family: inherit;
 }
 
 .slot-and-block {
@@ -14,15 +19,31 @@
 .block {
     background-color: white;
     /* border-bottom: 1px grey solid; */
-    width: 100%;
+    width: 99%;
     box-sizing: border-box;
-    position: absolute;
+    /* position: absolute; */
+    display: flex;
+    align-items: center;
+}
+
+.block:hover {
+    background-color: snow;
+}
+
+.dragger-container {
+    opacity: .6;
+}
+
+.dragger-container:hover {
+    opacity: 1;
 }
 
 .dragger {
-    position: absolute;
-    right: 0;
+    /* position: absolute; */
     z-index: 1;
+    height: 15px; 
+    width: 15px; 
+    cursor: grab;
 }
 
 .slot {
@@ -30,9 +51,18 @@
     opacity: 0.4;   
 }
 
-.name {
-    text-align: center;
+/* .name {
+    justify-content: center;
     font-size: 28px;
+} */
+
+.name {
+    justify-content: center;
+}
+
+.name input {
+    text-align: center;
+    width: 100%;
 }
 
 .contact-info {
@@ -44,6 +74,7 @@
     z-index: 1;
     position: absolute;
     width: 100%;
+    display: flex;
 }
 
 .drop-wrap {
@@ -51,9 +82,13 @@
     top: 0;
 }
 
-.section-title {
+/* .section-title {
     text-decoration: underline;
     font-size: 20px;
+} */
+
+.section-title {
+    text-decoration: underline;
 }
 
 .item-title-with-date {
@@ -61,6 +96,34 @@
     justify-content: space-between;
 }
 
+.item-title-with-date input.item-title {
+    font-weight: bold;
+}
+
+.item-title-with-date input.date {
+    font-style: italic;
+    text-align: right;
+}
+
 .bullet-point {
     padding-left: 40px;
+}
+
+.bullet-point input {
+    width: 100%;
+}
+
+/**********************
+Font Sizes 
+**********************/
+.section-title input {
+    font-size: 20px;
+}
+
+.name input {
+    font-size: 28px;
+}
+
+.item-caption input, .bullet-point input, .item-title-with-date input, .contact-info input  {
+    font-size: 16px;
 }
