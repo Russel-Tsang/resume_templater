@@ -4,7 +4,7 @@ import React from 'react';
 
 const SlotAndBlock = (props) => {
     return ( 
-        <div className="slot-and-block">
+        <div className="slot-and-block" style={props.dropWrapStyle}>
             {props.children}
         </div>
     );

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './css_reset.css';
 import { BlockTypes } from './constants/constants';
 import { componentFor } from './util/helperFunctions';
 import { DndProvider } from 'react-dnd';
@@ -50,7 +51,14 @@ class App extends React.Component {
         this.setState({ resume, draggingBlockIdx: null, slotIdx: null });
     }
 
-
+    // onChange handler that changes state of resume as user types into input field
+    onResumeEdit(idx) {
+        return (field) => (inputText) => {
+            let resume = this.state.resume.slice();
+            resume[idx][field] = inputText;
+            this.setState({ resume });
+        }
+    }
 
     render() {
         // for each object in this.state.resume, return correct component
@@ -59,13 +67,14 @@ class App extends React.Component {
             const blockOptions = {
                 dropAction: this.setBlockIdx,
                 onMouseDown: this.setBlockIdx,
+                onResumeEdit: this.onResumeEdit(idx)
             }
             return componentFor(Object.assign(block, blockOptions), idx)
         });
 
         return (
             <DndProvider backend={Backend}>
-                <div id="app-body">
+                <div id="app-body" onClick={() => console.log('hello')}>
                     {slotAndBlocks}
                 </div>
             </DndProvider>
