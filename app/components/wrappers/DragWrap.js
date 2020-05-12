@@ -1,64 +1,67 @@
 import React, { useState } from 'react';
-// import { DragSource } from 'react-dnd';
 import { useDrag } from 'react-dnd';
 
-// const DragWrap = Component => props => {
-//     const { itemType, onMouseDown } = props;
-//     const [draggerState, setDraggerState] = useState(false);
-
-//     const [{ isDragging }, dragRef] = useDrag({
-//         item: { type: itemType },
-//         collect: monitor => ({ isDragging: !!monitor.isDragging() }),
-//         // canDrag: draggerState === true
-//     });
-
-//     // if component is being dragged, invoke the callback to change this state in index.js
-//     // if (isDragging) props.setDraggingBlockIdx(props.idx);
-
-//     return ( 
-//         <div ref={(e) => {console.log(dragRef); dragRef();}} className="drag-wrap" onMouseDown={onMouseDown}>
-//             <Component isDragging={isDragging} {...props}/>
-//             <div 
-//                 className="dragger" 
-//                 onMouseDown={() => setDraggerState(true)} 
-//                 onMouseUp={() => setDraggerState(false)} 
-//                 style={{ height: '20px', width: '50px', backgroundColor: "red" }}
-//             />
-//         </div>
-//     );
-// }
- 
-// export default DragWrap;
-
 const DragWrap = Component => props => {
-    const { itemType, onMouseDown } = props;
-    // const type
+    const { itemType, onMouseDown, blockStyle } = props;
+    
+    const [showDraggerState, setShowDraggerState] = useState(false);
+    const [isGrabbingState, setIsGrabbingState] = useState('grab');
+    const [canDragState, setCanDragState] = useState(false);
 
     const [{ isDragging }, dragRef] = useDrag({
         item: { type: itemType },
         collect: monitor => ({ isDragging: !!monitor.isDragging() }),
-        // canDrag: draggerState === true
+        canDrag: canDragState === true
     });
+
+
+    const Dragger = () => (
+        <span
+            className='dragger-container'
+            style={{ display: 'flex', cursor: isGrabbingState }}
+            onMouseDown={() => setIsGrabbingState('grabbing')}
+            onMouseUp={() => setIsGrabbingState('grab')}
+            onMouseOver={() => setCanDragState(true)}
+            onMouseLeave={() => setCanDragState(false)}
+        >
+            <img
+                src="app/images/move_icon.svg"
+                className="dragger"
+            />
+            <img
+                src="app/images/move_icon.svg"
+                className="dragger"
+                style={{ position: 'relative', right: '10px' }}
+            />
+        </span>
+    )
 
     return ( 
         <div 
             ref={dragRef} 
             className="drag-wrap" 
             onMouseDown={(e) => {
-                console.log(e.target.className);
                 if (e.target.className === 'resume-input') {
                     e.target.focus();
                 }
-                else onMouseDown();
+                onMouseDown();
             }}
+            onMouseEnter={ () => setShowDraggerState(true) }
+            onMouseLeave={ () => setShowDraggerState(false) }
         >
+            <div
+                style={{ 
+                    height: blockStyle.height, 
+                    width: '50px', 
+                    backgroundColor: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
+            {showDraggerState && Dragger()}
+            </div>
             <Component isDragging={isDragging} {...props}/>
-            <div 
-                className="dragger" 
-                onMouseDown={() => setDraggerState(true)} 
-                onMouseUp={() => setDraggerState(false)} 
-                style={{ height: '20px', width: '50px', backgroundColor: "red" }}
-            />
         </div>
     );
 }
