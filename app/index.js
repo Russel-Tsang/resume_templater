@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './css_reset.css';
 import { BlockTypes } from './constants/constants';
 import { componentFor } from './util/helperFunctions';
 import { DndProvider } from 'react-dnd';
@@ -52,9 +53,9 @@ class App extends React.Component {
 
     // onChange handler that changes state of resume as user types into input field
     onResumeEdit(idx) {
-        return (inputText) => {
+        return (field) => (inputText) => {
             let resume = this.state.resume.slice();
-            resume[idx].text = inputText;
+            resume[idx][field] = inputText;
             this.setState({ resume });
         }
     }
@@ -76,9 +77,6 @@ class App extends React.Component {
                 <div id="app-body" onClick={() => console.log('hello')}>
                     {slotAndBlocks}
                 </div>
-                {this.state.resume.map((resume, idx) => (
-                    <input className="resume-input" value={resume.text} onChange={(e) => this.onResumeEdit(idx)(e.target.value)} />
-                ))}
             </DndProvider>
         )
     }
