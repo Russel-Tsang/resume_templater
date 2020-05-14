@@ -2,38 +2,33 @@ import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
 
 const DragWrap = Component => props => {
-    const { itemType, onMouseDown, blockStyle } = props;
+    const { itemType, onDraggerMouseDown, onDraggerMouseUp, blockStyle, grabState, canDragState, onDragEnd } = props;
     
     const [showDraggerState, setShowDraggerState] = useState(false);
-    const [isGrabbingState, setIsGrabbingState] = useState('grab');
-    const [canDragState, setCanDragState] = useState(false);
 
     const [{ isDragging }, dragRef] = useDrag({
         item: { type: itemType },
+        canDrag: canDragState === true,
+        end: (item, monitor) => onDragEnd(),
         collect: monitor => ({ isDragging: !!monitor.isDragging() }),
-        canDrag: canDragState === true
     });
 
 
     const Dragger = () => (
-        <span
-            className='dragger-container'
-            style={{ display: 'flex', cursor: isGrabbingState }}
-            onMouseDown={() => setIsGrabbingState('grabbing')}
-            onMouseUp={() => setIsGrabbingState('grab')}
-            onMouseOver={() => setCanDragState(true)}
-            onMouseLeave={() => setCanDragState(false)}
+        <div
+            className='dragger-img-container'
+            style={{ display: 'flex' }}
         >
             <img
                 src="app/images/move_icon.svg"
-                className="dragger"
+                className="dragger-img"
             />
             <img
                 src="app/images/move_icon.svg"
-                className="dragger"
+                className="dragger-img"
                 style={{ position: 'relative', right: '10px' }}
             />
-        </span>
+        </div>
     )
 
     return ( 
@@ -44,22 +39,26 @@ const DragWrap = Component => props => {
                 if (e.target.className === 'resume-input') {
                     e.target.focus();
                 }
-                onMouseDown();
             }}
-            onMouseEnter={ () => setShowDraggerState(true) }
-            onMouseLeave={ () => setShowDraggerState(false) }
+            onMouseEnter={() => setShowDraggerState(true)}
+            onMouseLeave={() => setShowDraggerState(false)}
         >
             <div
                 style={{ 
                     height: blockStyle.height, 
-                    width: '50px', 
+                    width: '30px', 
                     backgroundColor: 'white',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    cursor: grabState
                 }}
+                className="dragger"
+                onMouseDown={onDraggerMouseDown}
+                onMouseUp={onDraggerMouseUp}
             >
             {showDraggerState && Dragger()}
+            {/* {Dragger()} */}
             </div>
             <Component isDragging={isDragging} {...props}/>
         </div>

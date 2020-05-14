@@ -38,13 +38,16 @@ export const componentFor = function(blockOptions, idx) {
                     typeOfBlock={blockOptions.type}
                 >
                     <Block
-                        key={`block-${idx}`}
                         itemType={ItemTypes.BLOCK}
                         typeOfBlock={blockOptions.type}
                         value={blockOptions.text}
-                        onMouseDown={() => blockOptions.onMouseDown(idx, 'draggingBlock')}
+                        onDraggerMouseDown={() => blockOptions.onDraggerMouseDown(idx, 'draggingBlock')}
+                        onDraggerMouseUp={blockOptions.onDraggerMouseUp}
+                        onDragEnd={blockOptions.onDragEnd}
                         onResumeEdit={blockOptions.onResumeEdit}
                         blockStyle={BlockStyles[blockOptions.type]}
+                        grabState={blockOptions.grabState}
+                        canDragState={blockOptions.canDragState}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]}/>
                 </SlotAndBlock>
@@ -63,9 +66,13 @@ export const componentFor = function(blockOptions, idx) {
                         itemType={ItemTypes.BLOCK}
                         typeOfBlock={blockOptions.type}
                         contactInfo={{ address, email, phoneNumber }}
-                        onMouseDown={() => blockOptions.onMouseDown(idx, 'draggingBlock')}
+                        onDraggerMouseDown={() => blockOptions.onDraggerMouseDown(idx, 'draggingBlock')}
+                        onDraggerMouseUp={blockOptions.onDraggerMouseUp}
+                        onDragEnd={blockOptions.onDragEnd}
                         onResumeEdit={blockOptions.onResumeEdit}
                         blockStyle={BlockStyles[blockOptions.type]}
+                        grabState={blockOptions.grabState}
+                        canDragState={blockOptions.canDragState}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]}/>
                 </SlotAndBlock>
@@ -84,9 +91,13 @@ export const componentFor = function(blockOptions, idx) {
                         typeOfBlock={blockOptions.type}
                         itemTitle={blockOptions.itemTitle}
                         date={blockOptions.date}
-                        onMouseDown={() => blockOptions.onMouseDown(idx, 'draggingBlock')}
+                        onDraggerMouseDown={() => blockOptions.onDraggerMouseDown(idx, 'draggingBlock')}
+                        onDraggerMouseUp={blockOptions.onDraggerMouseUp}
+                        onDragEnd={blockOptions.onDragEnd}
                         onResumeEdit={blockOptions.onResumeEdit}
                         blockStyle={BlockStyles[blockOptions.type]}
+                        grabState={blockOptions.grabState}
+                        canDragState={blockOptions.canDragState}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]} />
                 </SlotAndBlock>
@@ -105,8 +116,12 @@ export const componentFor = function(blockOptions, idx) {
                         typeOfBlock={blockOptions.type}
                         itemTitle={blockOptions.itemTitle}
                         date={blockOptions.date}
-                        onMouseDown={() => blockOptions.onMouseDown(idx, 'draggingBlock')}
+                        onDraggerMouseDown={() => blockOptions.onDraggerMouseDown(idx, 'draggingBlock')}
+                        onDraggerMouseUp={blockOptions.onDraggerMouseUp}
+                        onDragEnd={blockOptions.onDragEnd}
                         blockStyle={BlockStyles[blockOptions.type]}
+                        grabState={blockOptions.grabState}
+                        canDragState={blockOptions.canDragState}
                     />
                     <Slot slotStyle={BlockStyles[blockOptions.type]} />
                 </SlotAndBlock>

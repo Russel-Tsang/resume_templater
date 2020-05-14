@@ -30,6 +30,8 @@ class App extends React.Component {
             ],
             draggingBlockIdx: null, // index of block currently being dragged
             slotIdx: null, // index of block being dropped on 
+            grabState: 'grab', // will be 'grab' or 'grabbing'; helps define cursor state for .dragger
+            canDragState: false // determines whether or not user can drag block; sets to true onMouseDown of .dragger
         }
 
         this.setBlockIdx = this.setBlockIdx.bind(this);
@@ -65,16 +67,26 @@ class App extends React.Component {
         // while passing along callbacks for dragging and dropping events
         const slotAndBlocks = this.state.resume.map((block, idx) => {
             const blockOptions = {
-                dropAction: this.setBlockIdx,
-                onMouseDown: this.setBlockIdx,
-                onResumeEdit: this.onResumeEdit(idx)
+                onDraggerMouseDown: (idx, type) => {
+                    this.setState({ grabState: 'grabbing', canDragState: true });
+                    this.setBlockIdx(idx, type);
+                },
+                onDraggerMouseUp: () => this.setState({ grabState: 'grab', canDragState: false }),
+                onDragEnd: () => this.setState({ canDragState: false, grabState: 'grab' }),
+                dropAction: (idx, type) => {
+                    this.setState({ canDragState: false });
+                    this.setBlockIdx(idx, type);
+                },
+                onResumeEdit: this.onResumeEdit(idx),
+                grabState: this.state.grabState,
+                canDragState: this.state.canDragState
             }
             return componentFor(Object.assign(block, blockOptions), idx)
         });
 
         return (
             <DndProvider backend={Backend}>
-                <div id="app-body" onClick={() => console.log('hello')}>
+                <div id="app-body">
                     {slotAndBlocks}
                 </div>
             </DndProvider>
