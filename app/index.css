@@ -10,6 +10,15 @@
 
 input {
     font-family: inherit;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    padding: 0; /* prevents border from overlapping parent container border */
+    /* background-color: snow; */
+}
+
+input.show-border {
+    border: 1px gray solid;
 }
 
 .slot-and-block {
@@ -20,7 +29,6 @@ input {
     background-color: white;
     /* border-bottom: 1px grey solid; */
     width: 99%;
-    box-sizing: border-box;
     /* position: absolute; */
     display: flex;
     align-items: center;
@@ -30,20 +38,19 @@ input {
     background-color: snow;
 }
 
-.dragger-container {
+.dragger-img-container {
     opacity: .6;
 }
 
-.dragger-container:hover {
+.dragger-img-container:hover {
     opacity: 1;
 }
 
-.dragger {
+.dragger-img {
     /* position: absolute; */
-    z-index: 1;
     height: 15px; 
     width: 15px; 
-    cursor: grab;
+    /* pointer-events: none */
 }
 
 .slot {
@@ -62,7 +69,6 @@ input {
 
 .name input {
     text-align: center;
-    width: 100%;
 }
 
 .contact-info {
