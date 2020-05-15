@@ -10,7 +10,7 @@ const DragWrap = Component => props => {
         item: { type: itemType },
         canDrag: canDragState === true,
         end: (item, monitor) => onDragEnd(),
-        collect: monitor => ({ isDragging: !!monitor.isDragging() }),
+        collect: monitor => ({ isDragging: monitor.isDragging() }),
     });
 
 
@@ -35,11 +35,6 @@ const DragWrap = Component => props => {
         <div 
             ref={dragRef} 
             className="drag-wrap" 
-            onMouseDown={(e) => {
-                if (e.target.className === 'resume-input') {
-                    e.target.focus();
-                }
-            }}
             onMouseEnter={() => setShowDraggerState(true)}
             onMouseLeave={() => setShowDraggerState(false)}
         >

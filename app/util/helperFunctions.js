@@ -23,108 +23,65 @@ import { BlockTypes, ItemTypes, BlockStyles } from "../constants/constants";
  ************************************/
  
 export const componentFor = function(blockOptions, idx) {
+    return (
+        <SlotAndBlock
+            key={idx}
+            acceptType={ItemTypes.BLOCK}
+            dropAction={() => blockOptions.dropAction(idx, 'slot')}
+            dropWrapStyle={BlockStyles[blockOptions.type]}
+            typeOfBlock={blockOptions.type}
+        >
+            {getCorrectDragBlock(blockOptions, idx)}
+            <Slot slotStyle={BlockStyles[blockOptions.type]}/>
+        </SlotAndBlock>
+    );
+}
+
+function getCorrectDragBlock(blockOptions, idx) {
     const { NAME, CONTACT_INFO, SECTION_TITLE, ITEM_TITLE_WITH_DATE, ITEM_CAPTION, BULLET_POINT, SPACE_BLOCK } = BlockTypes;
-    switch(blockOptions.type) {
+
+    const commonProps = {
+        itemType: ItemTypes.BLOCK,
+        typeOfBlock: blockOptions.type,
+        onDraggerMouseDown: () => blockOptions.onDraggerMouseDown(idx, 'draggingBlock'),
+        onDraggerMouseUp: blockOptions.onDraggerMouseUp,
+        onDragEnd: blockOptions.onDragEnd,
+        grabState: blockOptions.grabState,
+        canDragState: blockOptions.canDragState,
+        blockStyle: BlockStyles[blockOptions.type],
+        onResumeEdit: blockOptions.onResumeEdit
+    }
+
+    switch (blockOptions.type) {
         case NAME:
         case ITEM_CAPTION:
         case BULLET_POINT:
         case SECTION_TITLE:
             return (
-                <SlotAndBlock
-                    key={idx}
-                    acceptType={ItemTypes.BLOCK}
-                    dropAction={() => blockOptions.dropAction(idx, 'slot')}
-                    dropWrapStyle={BlockStyles[blockOptions.type]}
-                    typeOfBlock={blockOptions.type}
-                >
-                    <Block
-                        itemType={ItemTypes.BLOCK}
-                        typeOfBlock={blockOptions.type}
-                        value={blockOptions.text}
-                        onDraggerMouseDown={() => blockOptions.onDraggerMouseDown(idx, 'draggingBlock')}
-                        onDraggerMouseUp={blockOptions.onDraggerMouseUp}
-                        onDragEnd={blockOptions.onDragEnd}
-                        onResumeEdit={blockOptions.onResumeEdit}
-                        blockStyle={BlockStyles[blockOptions.type]}
-                        grabState={blockOptions.grabState}
-                        canDragState={blockOptions.canDragState}
-                    />
-                    <Slot slotStyle={BlockStyles[blockOptions.type]}/>
-                </SlotAndBlock>
+                <Block
+                    {...commonProps}
+                    value={blockOptions.text}
+                />
             );
         case CONTACT_INFO:
             const { address, email, phoneNumber } = blockOptions;
             return (
-                <SlotAndBlock
-                    key={idx}
-                    acceptType={ItemTypes.BLOCK}
-                    dropAction={() => blockOptions.dropAction(idx, 'slot')}
-                    dropWrapStyle={BlockStyles[blockOptions.type]}
-                    typeOfBlock={blockOptions.type}
-                >
-                    <ContactInfo
-                        itemType={ItemTypes.BLOCK}
-                        typeOfBlock={blockOptions.type}
-                        contactInfo={{ address, email, phoneNumber }}
-                        onDraggerMouseDown={() => blockOptions.onDraggerMouseDown(idx, 'draggingBlock')}
-                        onDraggerMouseUp={blockOptions.onDraggerMouseUp}
-                        onDragEnd={blockOptions.onDragEnd}
-                        onResumeEdit={blockOptions.onResumeEdit}
-                        blockStyle={BlockStyles[blockOptions.type]}
-                        grabState={blockOptions.grabState}
-                        canDragState={blockOptions.canDragState}
-                    />
-                    <Slot slotStyle={BlockStyles[blockOptions.type]}/>
-                </SlotAndBlock>
+                <ContactInfo
+                    {...commonProps}
+                    contactInfo={{ address, email, phoneNumber }}
+                />
             );
         case ITEM_TITLE_WITH_DATE:
             return (
-                <SlotAndBlock
-                    key={idx}
-                    acceptType={ItemTypes.BLOCK}
-                    dropAction={() => blockOptions.dropAction(idx, 'slot')}
-                    dropWrapStyle={BlockStyles[blockOptions.type]}
-                    typeOfBlock={blockOptions.type}
-                >
-                    <ItemTitleWithDate
-                        itemType={ItemTypes.BLOCK}
-                        typeOfBlock={blockOptions.type}
-                        itemTitle={blockOptions.itemTitle}
-                        date={blockOptions.date}
-                        onDraggerMouseDown={() => blockOptions.onDraggerMouseDown(idx, 'draggingBlock')}
-                        onDraggerMouseUp={blockOptions.onDraggerMouseUp}
-                        onDragEnd={blockOptions.onDragEnd}
-                        onResumeEdit={blockOptions.onResumeEdit}
-                        blockStyle={BlockStyles[blockOptions.type]}
-                        grabState={blockOptions.grabState}
-                        canDragState={blockOptions.canDragState}
-                    />
-                    <Slot slotStyle={BlockStyles[blockOptions.type]} />
-                </SlotAndBlock>
+                <ItemTitleWithDate
+                    {...commonProps}
+                    itemTitle={blockOptions.itemTitle}
+                    date={blockOptions.date}
+                />
             );
         case SPACE_BLOCK:
             return (
-                <SlotAndBlock
-                    key={idx}
-                    acceptType={ItemTypes.BLOCK}
-                    dropAction={() => blockOptions.dropAction(idx, 'slot')}
-                    dropWrapStyle={BlockStyles[blockOptions.type]}
-                    typeOfBlock={blockOptions.type}
-                >
-                    <SpaceBlock
-                        itemType={ItemTypes.BLOCK}
-                        typeOfBlock={blockOptions.type}
-                        itemTitle={blockOptions.itemTitle}
-                        date={blockOptions.date}
-                        onDraggerMouseDown={() => blockOptions.onDraggerMouseDown(idx, 'draggingBlock')}
-                        onDraggerMouseUp={blockOptions.onDraggerMouseUp}
-                        onDragEnd={blockOptions.onDragEnd}
-                        blockStyle={BlockStyles[blockOptions.type]}
-                        grabState={blockOptions.grabState}
-                        canDragState={blockOptions.canDragState}
-                    />
-                    <Slot slotStyle={BlockStyles[blockOptions.type]} />
-                </SlotAndBlock>
+                <SpaceBlock {...commonProps} />
             ); 
     }
 }

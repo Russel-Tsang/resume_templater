@@ -9,8 +9,8 @@ const DropWrap = Component => props => {
         canDrop: dropCondition || function() { return true } ,
         drop: dropAction,
         collect: monitor => ({ 
-            isOver: !!monitor.isOver(), 
-            canDrop: !!monitor.canDrop() ,
+            isOver: monitor.isOver(), 
+            canDrop: monitor.canDrop(),
         }),
     });
 
