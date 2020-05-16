@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 
 const ItemTitleWithDate = (props) => {
     if (props.isDragging) return null;
-    const [showBorderClass, setShowBorderClass] = useState('');
     return (
         <div 
             className={`${props.typeOfBlock} block`} 
             style={props.blockStyle}
-            onMouseOver={() => setShowBorderClass('show-border')}
-            onMouseLeave={() => setShowBorderClass('')}
+            onMouseOver={() => props.borderProps.setBorder(true)}
+            onMouseLeave={() => props.borderProps.setBorder(false)}
         >
-            <input className={`item-title ${showBorderClass}`} value={props.itemTitle} onChange={(e) => props.onResumeEdit('itemTitle')(e.target.value)} />
-            <input className={`date ${showBorderClass}`} value={props.date} onChange={(e) => props.onResumeEdit('date')(e.target.value)} />
+            <input className={`item-title ${props.borderProps.getClass}`} value={props.itemTitle} onClick={props.borderProps.setInputToActive} onChange={(e) => props.onResumeEdit('itemTitle')(e.target.value)} />
+            <input className={`date ${props.borderProps.getClass}`} value={props.date} onClick={props.borderProps.setInputToActive} onChange={(e) => props.onResumeEdit('date')(e.target.value)} />
         </div>
     );
 }

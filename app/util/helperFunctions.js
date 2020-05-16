@@ -49,7 +49,8 @@ function getCorrectDragBlock(blockOptions, idx) {
         grabState: blockOptions.grabState,
         canDragState: blockOptions.canDragState,
         blockStyle: BlockStyles[blockOptions.type],
-        onResumeEdit: blockOptions.onResumeEdit
+        onResumeEdit: blockOptions.onResumeEdit,
+        borderProps: blockOptions.borderProps
     }
 
     switch (blockOptions.type) {

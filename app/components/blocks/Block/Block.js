@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 
 const Block = (props) => {
-    if (props.isDragging) return null;
+    if (props.isDragging) { console.log('isNull'); return null;}
 
-    const [showBorderClass, setShowBorderClass] = useState('');
     return (
         <div 
             className={`${props.typeOfBlock} block`} 
             style={props.blockStyle} 
-            onMouseOver={() => setShowBorderClass('show-border')} 
-            onMouseLeave={() => setShowBorderClass('')}
+            onMouseOver={() => props.borderProps.setBorder(true)} 
+            onMouseLeave={() => props.borderProps.setBorder(false)}
         >
             {/* {props.value} */}
-            <input key={props.key} className={showBorderClass} value={props.value} onChange={(e) => props.onResumeEdit('text')(e.target.value)} />
+            <input 
+                key={props.key} 
+                className={props.borderProps.getClass}
+                value={props.value}
+                onClick={props.borderProps.setInputToActive}
+                onChange={(e) => props.onResumeEdit('text')(e.target.value)} 
+            />
         </div>
     );
 }
