@@ -21,3 +21,25 @@ export const BlockStyles = {
     'bullet-point': { height: '20px' }, 
     'space-block': { height: '20px' },
 }
+
+export const BlockLabels = {
+    'name': 'Full Name',
+    'contact-info': 'Contact Info',
+    'section-title': 'Section Title',
+    'item-title-with-date': 'Item Title with Date',
+    'item-caption': 'Item Caption',
+    'bullet-point': 'Bullet Point',
+    'space-block': 'Space Block',
+}
+
+export const InputFieldLabels = {
+    FULL_NAME_LBL: 'Full Name',
+    ADDRESS_LBL: 'Address',
+    EMAIL_LBL: 'Email',
+    PHONE_NUMBER_LBL: 'Phone Number',
+    SECTION_TITLE_LBL: 'Section Title',
+    ITEM_TITLE_LBL: 'Item Title',
+    DATE_LBL: 'Date',
+    ITEM_CAPTION_LBL: 'Item Caption',
+    BULLET_POINT_LBL: 'Bullet Point'
+}
