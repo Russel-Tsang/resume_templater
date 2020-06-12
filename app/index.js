@@ -4,6 +4,7 @@ import './index.css';
 import './css_reset.css';
 import { BlockTypes } from './constants/constants';
 import { componentFor } from './util/helperFunctions';
+import Modal from './components/modal/';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 
@@ -33,6 +34,7 @@ class App extends React.Component {
             slotIdx: null, // index of block being dropped on 
             grabState: 'grab', // will be 'grab' or 'grabbing'; helps define cursor state for .dragger
             canDragState: false, // determines whether or not user can drag block; sets to true onMouseDown of .dragger
+            modalOpen: false, // determines whether or not modal should be shown
             borderClasses: { // tracks which inputs to show borders for; currentActiveIndex helps choose which input's border to hide after clicking into another
                 state: [new Array(dummyResume.length).fill('')],
                 currentActiveIndex: null,
@@ -40,6 +42,7 @@ class App extends React.Component {
         }
 
         this.setBlockIdx = this.setBlockIdx.bind(this);
+        this.addBlock = this.addBlock.bind(this);
     }
 
     deepCopyBorderClasses() {
@@ -63,6 +66,14 @@ class App extends React.Component {
         [resume[draggingBlockIdx], resume[slotIdx]] = [resume[slotIdx], resume[draggingBlockIdx]];
         if (currentActiveIndex === draggingBlockIdx) this.setInputToActive(slotIdx)();
         this.setState({ resume, draggingBlockIdx: null, slotIdx: null });
+    }
+
+    // add block to resume
+    addBlock(type, options) {
+        let resume = JSON.parse(JSON.stringify(this.state.resume));
+        let block = {type, ...options};
+        resume.push(block);
+        this.setState({ resume, modalOpen: false });
     }
 
     // onChange handler that changes state of resume as user types into input field
@@ -133,8 +144,13 @@ class App extends React.Component {
         return (
             <DndProvider backend={Backend}>
                 <div id="app-body">
-                    {slotAndBlocks}
+                    <div id="resume-body">
+                        {slotAndBlocks}
+                    </div>
+                    <div className="add-icon" onClick={() => this.setState({ modalOpen: true })}>
+                    </div>
                 </div>
+                <Modal modalOpen={this.state.modalOpen} onModalSubmit={this.addBlock} />
             </DndProvider>
         )
     }

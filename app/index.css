@@ -1,4 +1,4 @@
-#app-body {
+#resume-body {
     width: 800px;
     border: 1px black solid;
     padding-top: 20px;
@@ -7,6 +7,58 @@
     margin: 0 auto;
     font-family: 'Times New Roman', Times, serif;
 }
+
+#app-body {
+    display: flex;
+    width: 932px;
+    margin: 0 auto;
+}
+
+.add-icon {
+    height: 50px;
+    width: 50px;
+    border: 1px black solid;
+}
+
+.modal-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,.4);
+    top: 0;
+    z-index: 1;
+}
+
+/* .modal-header {
+
+} */
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.block-type-options-div {
+    border: 1px black solid;
+}
+
+.edit-block-type-container {
+    position: relative;
+    width: 100%;
+}
+
+.edit-block-type-container > * {
+    width: 100%;
+}
+
+.block-type-options-div {
+    position: absolute;
+    background: white;
+}
+
 
 input {
     font-family: inherit;
