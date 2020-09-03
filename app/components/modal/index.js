@@ -78,11 +78,11 @@ const Modal = (props) => {
 
     return ( 
         <div className="modal-background" style={ !props.modalOpen ? { display: 'none' } : {} }>
-            <form style={{ height: '400px', width: '600px', backgroundColor: 'white', display: 'flex', flexDirection: 'column' }} onSubmit={ onModalSubmit }>
-                <header className="modal-header" style={{ height: '60px', backgroundColor: '#fafafa', display: 'flex', alignItems: 'center' }}>
+            <form onSubmit={ onModalSubmit }>
+                <header className="modal-header">
                     <h1>Add block</h1>
                 </header>
-                <section className="modal-body" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <section className="modal-body">
                     <label htmlFor="edit-block-type">Block type</label>
                     <div className="edit-block-type-container">
                         <button id="edit-block-type" 
