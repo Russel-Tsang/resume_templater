@@ -36,7 +36,7 @@ class App extends React.Component {
             canDragState: false, // determines whether or not user can drag block; sets to true onMouseDown of .dragger
             modalOpen: false, // determines whether or not modal should be shown
             borderClasses: { // tracks which inputs to show borders for; currentActiveIndex helps choose which input's border to hide after clicking into another
-                state: [new Array(dummyResume.length).fill('')],
+                state: new Array(dummyResume.length).fill(''),
                 currentActiveIndex: null,
             },
         }
@@ -118,6 +118,8 @@ class App extends React.Component {
         // for each object in this.state.resume, return correct component
         // while passing along callbacks for dragging and dropping events
         const slotAndBlocks = this.state.resume.map((block, idx) => {
+            console.log(idx);
+            if (block.type === 'name') console.log(this.state.borderClasses.state);
             const blockOptions = {
                 onDraggerMouseDown: (idx, type) => {
                     this.setState({ grabState: 'grabbing', canDragState: true });
