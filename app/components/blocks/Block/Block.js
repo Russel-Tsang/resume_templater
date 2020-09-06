@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 const Block = (props) => {
     if (props.isDragging) { console.log('isNull'); return null;}
-
     return (
         <div 
             className={`${props.typeOfBlock} block`} 

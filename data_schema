@@ -1,31 +1,55 @@
 User:
 
-  username | pw | email | resume_id
--------------------------------------
+username | pw | email |
+--------------------------
 
+Edits:
+
+username  |  resume_id
+--------------------------
 
 Resume:
+
+resume_id | resume_json
+--------------------------
 
 {
     name
     phoneNumber
     email
 
-    section {
-        sectionTitle:
-        items: [
-            {
-                itemTitle
-                itemCaption
-                date
-                bulletPoints: [
-                    {
-                        text
-                    }
-                ]
-            }
-        ]
-    }
+    /* Sections */
+    sections: [
+        {
+            type (generic)
+            sectionTitle
+            items: [
+                {
+                    itemTitle
+                    itemCaption
+                    date
+                    bulletPoints: [
+                        {
+                            text
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            type (skills) : (comma separated string)
+        }
+    ] 
 }
 
-  
+[
+    {type: name, text: 'Russel Tsang'}
+    {type: sectionTitle, text: '....'}
+    {type: sectionTitle, text: '....'}
+    {type: itemTitle, text: '....'}
+    {type: itemCaption, text: '....'}
+    {type: date, text: '....'}
+    {type: bulletPoint, text: '....'}
+    {type: emptyBlock}
+    {type: bulletPoint, text: '....'}
+]

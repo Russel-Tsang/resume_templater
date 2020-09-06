@@ -16,7 +16,7 @@ const DropWrap = Component => props => {
 
     return (
         <div className={`drop-wrap-${typeOfBlock}`} ref={dropRef}>
-            <Component {...props} />
+            <Component {...props} isOver={isOver} />
         </div>
     );
 }
