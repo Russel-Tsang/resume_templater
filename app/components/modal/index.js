@@ -77,25 +77,29 @@ const Modal = (props) => {
     }
 
     return ( 
-        <div className="modal-background" style={ !props.modalOpen ? { display: 'none' } : {} }>
+        <div className="modal-background" style={ props.modalOpen ? { display: 'none' } : {} }>
             <form onSubmit={ onModalSubmit }>
                 <header className="modal-header">
                     <h1>Add block</h1>
                 </header>
                 <section className="modal-body">
-                    <label htmlFor="edit-block-type">Block type</label>
-                    <div className="edit-block-type-container">
-                        <button id="edit-block-type" 
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setSettingBlockType(true);
-                            }}
-                        >
-                            {BlockLabels[selectedBlockType]}
-                        </button>
-                        {settingBlockType && blockTypeOptions}
+                    <div className="edit-block-type-section">
+                        <label htmlFor="edit-block-type">Block type: </label>
+                        <div className="edit-block-type-input-container">
+                            <button className="edit-block-type" 
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setSettingBlockType(true);
+                                }}
+                            >
+                                {BlockLabels[selectedBlockType]}
+                            </button>
+                            {settingBlockType && blockTypeOptions}
+                        </div>
                     </div>
-                    {inputFields[selectedBlockType]}
+                    <div className="input-container">
+                        {inputFields[selectedBlockType]}
+                    </div>
                     <button type="submit">Add Block</button>
                 </section>
             </form>

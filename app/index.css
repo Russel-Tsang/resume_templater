@@ -43,7 +43,7 @@
 
 .modal-background .modal-header {
     font-size: 28px;
-    height: 60px; 
+    height: 80px; 
     background-color: #fafafa; 
     display: flex; 
     align-items: center;
@@ -51,9 +51,39 @@
 }
 
 .modal-background .modal-body {
+    height: 100%;
+    padding: 0 50px; 
+
+    display: grid;
+    grid-template-rows: 40px auto 70px;
+}
+
+.modal-body .input-container {
+    grid-row: 2/3;
     display: flex;
     flex-direction: column;
-    height: 100%;
+}
+
+.modal-body input {
+    max-height: 60px;
+    font-size: 16px;
+    width: 75%;
+    margin-top: 40px;
+    border-bottom: 1px gray solid;
+    padding: 5px 0px;
+}
+
+.modal-body input:first-child {
+    margin-top: 20px;
+}
+
+.modal-body button[type="submit"] {
+    grid-row: 3/4;
+    width: 200px;
+    background-color: #009dff;
+    color: white;
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 
 .form-field {
@@ -63,22 +93,54 @@
 
 .block-type-options-div {
     border: 1px black solid;
+    cursor: pointer;
 }
 
-.edit-block-type-container {
+button.edit-block-type {
+    font-size: 16px;
+}
+
+.edit-block-type-section {
+    display: flex;
+    grid-row: 1/2;
+    margin-top: 20px;
+}
+
+.edit-block-type-section label {
+    width: 90px;
+}
+
+.edit-block-type-input-container {
     position: relative;
     width: 100%;
 }
 
-.edit-block-type-container > * {
+.edit-block-type-input-container > * {
     width: 100%;
+}
+
+.edit-block-type-input-container button {
+    text-align: left;
+    background: none;
+    border: none;
+    border-bottom: 1px black solid;
+    width: 200px;
 }
 
 .block-type-options-div {
     position: absolute;
     background: white;
+    width: 200px;
 }
 
+.block-type-options-list li {
+    padding: 2px 0px;
+    padding-left: 6px;
+}
+
+.block-type-options-list li:hover {
+    background-color: #F2F3F4;
+}
 
 input {
     font-family: inherit;
@@ -204,4 +266,11 @@ Font Sizes
 
 .item-caption input, .bullet-point input, .item-title-with-date input, .contact-info input  {
     font-size: 16px;
+}
+
+/**********************
+General Styles
+**********************/
+button {
+    cursor: pointer;
 }
