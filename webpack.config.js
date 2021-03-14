@@ -18,6 +18,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'app/index.html'
         })
-    ]
-
+    ],
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            '@components': 'app/components',
+        }
+    }
 }

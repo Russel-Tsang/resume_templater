@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './css_reset.css';
-import ResumeTemplater from './components/ResumeTemplater';
+import ResumeTemplater from '@components/ResumeTemplater';
 
 const App = () => {
     return (
