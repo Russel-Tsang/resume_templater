@@ -1,52 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './css_reset.css';
-import { BlockTypes } from './constants/constants';
 import { componentFor } from './util/helperFunctions';
 import Modal from './components/modal/';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
+import { dummyResume } from './dummyData';
 
-const { NAME, CONTACT_INFO, SECTION_TITLE, ITEM_TITLE_WITH_DATE, ITEM_CAPTION, BULLET_POINT, SPACE_BLOCK } = BlockTypes;
-// Some dummy data; we'll be receiving this data from some data storage later on
-const dummyResume = [
-    { type: NAME, text: 'Russel Tsang' },
-    { type: CONTACT_INFO, address: 'Brooklyn NY', email: 'test@test.com', phoneNumber: '123-123-1234' },
-    { type: SECTION_TITLE, text: 'Experience' },
-    { type: ITEM_TITLE_WITH_DATE, itemTitle: 'First Workplace', date: 'Jan 2019' },
-    { type: ITEM_CAPTION, text: 'First Job Position' },
-    { type: BULLET_POINT, text: 'Turnip greens yarrow ricebean rutabaga endive cauliflower sea lettuce' },
-    { type: BULLET_POINT, text: 'Brussels sprout coriander water chestnut gourd swiss beetroot chard chicory earthnut pea potato' },
-    { type: SPACE_BLOCK },
-    { type: ITEM_TITLE_WITH_DATE, itemTitle: 'Second Workplace', date: 'Feb 2020' },
-    { type: ITEM_CAPTION, text: 'Second Job Position' },
-    { type: BULLET_POINT, text: 'Nori grape silver beet broccoli kombu beet greens quandong swiss' },
-    { type: BULLET_POINT, text: 'Celery quandong swiss chard chicory earthnut pea potato' },
-];
+const App = () => {
+    const [resume, setResume] = useState(dummyResume);
+    const [draggingBlockIdx, setDraggingBlockIdx] = useState(null); // index of block currently being dragged
+    const [slotIdx, setSlotIdx] = useState(null); // index of block being dropped on 
+    const [grabState, setGrabState] = useState('grab'); // will be 'grab' or 'grabbing'; helps define cursor state for .dragger
+    const [canDragState, setCanDragState] = useState(false); // determines whether or not user can drag block; sets to true onMouseDown of .dragger
+    const [modalOpen, setModalOpen] = useState(false); // determines whether or not modal should be shown
+    const [borderClasses, setBorderClasses] = useState({ // tracks which inputs to show borders for; currentActiveIndex helps choose which input's border to hide after clicking into another
+        state: new Array(dummyResume.length).fill(''),
+        currentActiveIndex: null,
+    });
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            resume: dummyResume,
-            draggingBlockIdx: null, // index of block currently being dragged
-            slotIdx: null, // index of block being dropped on 
-            grabState: 'grab', // will be 'grab' or 'grabbing'; helps define cursor state for .dragger
-            canDragState: false, // determines whether or not user can drag block; sets to true onMouseDown of .dragger
-            modalOpen: false, // determines whether or not modal should be shown
-            borderClasses: { // tracks which inputs to show borders for; currentActiveIndex helps choose which input's border to hide after clicking into another
-                state: new Array(dummyResume.length).fill(''),
-                currentActiveIndex: null,
-            },
-        }
+    useEffect(() => {
+        switchBlocks();
+    }, [slotIdx]);
 
-        this.setBlockIdx = this.setBlockIdx.bind(this);
-        this.addBlock = this.addBlock.bind(this);
-    }
-
-    deepCopyBorderClasses() {
-        let borderClasses = { ...this.state.borderClasses };
+    function deepCopyBorderClasses() {
         borderClasses.state = [...borderClasses.state];
         return borderClasses;
     }
@@ -54,54 +32,57 @@ class App extends React.Component {
     // set index state of respective item (draggingBlockIdx or slotIdx)
     //// if type === 'slot', then user must've attempted block-switch
     //// so set slotIdx state, and then switch blocks 
-    setBlockIdx(idx, type) {
-        if (type === 'draggingBlock') this.setState({ draggingBlockIdx: idx });
-        else if (type === 'slot') this.setState({ slotIdx: idx }, this.switchBlocks);
+    function setBlockIdx(idx, type) {
+        if (type === 'draggingBlock') setDraggingBlockIdx(idx);
+        else if (type === 'slot') setSlotIdx(idx);
     }
 
     // swap blocks based on state indices, reset draggingBlockIdx and slotIdx to null
-    switchBlocks() {
-        const { draggingBlockIdx, slotIdx, borderClasses: { currentActiveIndex } } = this.state;
-        let resume = this.state.resume.slice();
-        [resume[draggingBlockIdx], resume[slotIdx]] = [resume[slotIdx], resume[draggingBlockIdx]];
-        if (currentActiveIndex === draggingBlockIdx) this.setInputToActive(slotIdx)();
-        this.setState({ resume, draggingBlockIdx: null, slotIdx: null });
+    function switchBlocks() {
+        const { currentActiveIndex } = borderClasses;
+        let newResume = resume.slice();
+        [newResume[draggingBlockIdx], newResume[slotIdx]] = [newResume[slotIdx], newResume[draggingBlockIdx]];
+        if (currentActiveIndex === draggingBlockIdx) setInputToActive(slotIdx)();
+        setResume(newResume);
+        setDraggingBlockIdx(null);
+        setSlotIdx(null);
     }
 
     // add block to resume
-    addBlock(type, options) {
-        let resume = JSON.parse(JSON.stringify(this.state.resume));
+    function addBlock(type, options) {
+        let resume = JSON.parse(JSON.stringify(resume));
         let block = {type, ...options};
         resume.push(block);
-        this.setState({ resume, modalOpen: false });
+        setResume(resume);
+        setModalOpen(false);
     }
 
     // onChange handler that changes state of resume as user types into input field
-    onResumeEdit(idx) {
+    function onResumeEdit(idx) {
         return (field) => (inputText) => {
-            let resume = this.state.resume.slice();
-            resume[idx][field] = inputText;
-            this.setState({ resume });
+            let newResume = resume.slice();
+            newResume[idx][field] = inputText;
+            setResume(newResume);
         }
     }
 
-    setBorder(idx) {
+    function setBorder(idx) {
         return (setBorder) => {
-            let borderClasses = this.deepCopyBorderClasses();
+            let borderClasses = deepCopyBorderClasses();
             if (setBorder === true) borderClasses.state[idx] = "show-border";
 
             // prevent input's border from disappearing if input is currently active
-            else if (this.state.borderClasses.currentActiveIndex !== idx) {
+            else if (borderClasses.currentActiveIndex !== idx) {
                 borderClasses.state[idx] = "";
             }
 
-            this.setState({ borderClasses });
+            setBorderClasses(borderClasses);
         }
     }
 
-    setInputToActive(idx) {
+    function setInputToActive(idx) {
         return () => {
-            let borderClasses = this.deepCopyBorderClasses();
+            let borderClasses = deepCopyBorderClasses();
 
             // if an input is currently active, remove the border from that input
             if (borderClasses.currentActiveIndex !== null) borderClasses.state[borderClasses.currentActiveIndex] = "";
@@ -110,52 +91,56 @@ class App extends React.Component {
             borderClasses.state[idx] = "show-border";
             borderClasses.currentActiveIndex = idx;
 
-            this.setState({ borderClasses });
+            setBorderClasses(borderClasses);
         }
     }
-
-    render() {
-        // for each object in this.state.resume, return correct component
-        // while passing along callbacks for dragging and dropping events
-        const slotAndBlocks = this.state.resume.map((block, idx) => {
-            console.log(idx);
-            if (block.type === 'name') console.log(this.state.borderClasses.state);
-            const blockOptions = {
-                onDraggerMouseDown: (idx, type) => {
-                    this.setState({ grabState: 'grabbing', canDragState: true });
-                    this.setBlockIdx(idx, type);
-                },
-                onDraggerMouseUp: () => this.setState({ grabState: 'grab', canDragState: false }),
-                onDragEnd: () => this.setState({ canDragState: false, grabState: 'grab' }),
-                dropAction: (idx, type) => {
-                    this.setState({ canDragState: false });
-                    this.setBlockIdx(idx, type);
-                },
-                onResumeEdit: this.onResumeEdit(idx),
-                grabState: this.state.grabState,
-                canDragState: this.state.canDragState,
-                borderProps: { 
-                    getClass: this.state.borderClasses.state[idx], 
-                    setBorder: this.setBorder(idx),
-                    setInputToActive: this.setInputToActive(idx)
-                }
+    // for each object in resume, return correct component
+    // while passing along callbacks for dragging and dropping events
+    const slotAndBlocks = resume.map((block, idx) => {
+        console.log(idx);
+        if (block.type === 'name') console.log(borderClasses.state);
+        const blockOptions = {
+            onDraggerMouseDown: (idx, type) => {
+                setGrabState('grabbing')
+                setCanDragState(true);
+                setBlockIdx(idx, type);
+            },
+            onDraggerMouseUp: () => { 
+                setGrabState('grab');
+                setCanDragState(false); 
+            },
+            onDragEnd: () => { 
+                setCanDragState(false);
+                setGrabState('grab');
+            },
+            dropAction: (idx, type) => {
+                setCanDragState(false);
+                setBlockIdx(idx, type);
+            },
+            onResumeEdit: onResumeEdit(idx),
+            grabState: grabState,
+            canDragState: canDragState,
+            borderProps: { 
+                getClass: borderClasses.state[idx], 
+                setBorder: setBorder(idx),
+                setInputToActive: setInputToActive(idx)
             }
-            return componentFor(Object.assign(block, blockOptions), idx)
-        });
+        }
+        return componentFor(Object.assign(block, blockOptions), idx)
+    });
 
-        return (
-            <DndProvider backend={Backend}>
-                <div id="app-body">
-                    <div id="resume-body">
-                        {slotAndBlocks}
-                    </div>
-                    <div className="add-icon" onClick={() => this.setState({ modalOpen: true })}>
-                    </div>
+    return (
+        <DndProvider backend={Backend}>
+            <div id="app-body">
+                <div id="resume-body">
+                    {slotAndBlocks}
                 </div>
-                <Modal modalOpen={this.state.modalOpen} onModalSubmit={this.addBlock} />
-            </DndProvider>
-        )
-    }
+                <div className="add-icon" onClick={() => setModalOpen(true)}>
+                </div>
+            </div>
+            <Modal modalOpen={modalOpen} onModalSubmit={addBlock} />
+        </DndProvider>
+    )
 }
 
 ReactDOM.render(<App />, document.getElementById('app'))
