@@ -1,4 +1,4 @@
-import { BlockTypes } from './constants/constants';
+import { BlockTypes } from '@constants';
 
 const { NAME, CONTACT_INFO, SECTION_TITLE, ITEM_TITLE_WITH_DATE, ITEM_CAPTION, BULLET_POINT, SPACE_BLOCK } = BlockTypes;
 

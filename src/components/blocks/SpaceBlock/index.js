@@ -1,4 +1,4 @@
-import DragWrap from '../../wrappers/DragWrap';
+import DragWrap from '@components/wrappers/DragWrap';
 import SpaceBlock from './SpaceBlock';
 
 export default DragWrap(SpaceBlock);

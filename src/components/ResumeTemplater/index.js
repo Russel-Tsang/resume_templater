@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { componentFor } from '../../util/helperFunctions';
-import Modal from '../modal';
+import { componentFor } from '@util/helperFunctions';
+import Modal from '@components/modal';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import { dummyResume } from '../../dummyData';

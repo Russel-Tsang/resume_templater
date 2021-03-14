@@ -1,5 +1,4 @@
-import React from 'react';
 import Block from './Block';
-import DragWrap from '../../wrappers/DragWrap';
+import DragWrap from '@components/wrappers/DragWrap';
 
 export default DragWrap(Block);

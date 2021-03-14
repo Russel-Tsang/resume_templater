@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const ItemTitleWithDate = (props) => {
     if (props.isDragging) return null;

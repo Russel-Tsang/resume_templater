@@ -5,7 +5,7 @@ import Slot from "../components/blocks/Slot";
 import SlotAndBlock from "../components/blocks/SlotAndBlock";
 import ContactInfo from "../components/blocks/ContactInfo";
 import ItemTitleWithDate from "../components/blocks/ItemTitleWithDate";
-import { BlockTypes, ItemTypes, BlockStyles } from "../constants/constants";
+import { BlockTypes, ItemTypes, BlockStyles } from "@constants";
 
 /************************************
  FUTURE: Function to flatten JSON

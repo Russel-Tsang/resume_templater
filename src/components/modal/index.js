@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BlockTypes, BlockLabels, InputFieldLabels } from '../../constants/constants';
+import { BlockTypes, BlockLabels, InputFieldLabels } from '@constants';
 
 const { NAME, CONTACT_INFO, SECTION_TITLE, ITEM_TITLE_WITH_DATE, ITEM_CAPTION, BULLET_POINT, SPACE_BLOCK } = BlockTypes;
 const { FULL_NAME_LBL, ADDRESS_LBL, EMAIL_LBL, PHONE_NUMBER_LBL, SECTION_TITLE_LBL, ITEM_TITLE_LBL, DATE_LBL, ITEM_CAPTION_LBL, BULLET_POINT_LBL } = InputFieldLabels;
