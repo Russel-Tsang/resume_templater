@@ -77,7 +77,7 @@ const Modal = (props) => {
     }
 
     return ( 
-        <div className="modal-background" style={ props.modalOpen ? { display: 'none' } : {} }>
+        <div className="modal-background" style={{ display: props.modalOpen ? 'flex' : 'none' }}>
             <form onSubmit={ onModalSubmit }>
                 <header className="modal-header">
                     <h1>Add block</h1>
