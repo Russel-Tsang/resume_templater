@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useDrag } from 'react-dnd';
+import { Context as templaterContext } from '@components/ResumeTemplater/context';
 
 const DragWrap = Component => props => {
     const { itemType, onDraggerMouseDown, onDraggerMouseUp, blockStyle, grabState, canDragState, onDragEnd } = props;
+    const { state: templaterState } = useContext(templaterContext);
     
     const [showDraggerState, setShowDraggerState] = useState(false);
 
     const [{ isDragging }, dragRef] = useDrag({
         item: { type: itemType },
-        canDrag: canDragState === true,
+        canDrag: templaterState.canDragState === true,
         end: (item, monitor) => onDragEnd(),
         collect: monitor => ({ isDragging: monitor.isDragging() }),
     });
@@ -20,11 +22,11 @@ const DragWrap = Component => props => {
             style={{ display: 'flex' }}
         >
             <img
-                src="app/images/move_icon.svg"
+                src="src/images/move_icon.svg"
                 className="dragger-img"
             />
             <img
-                src="app/images/move_icon.svg"
+                src="src/images/move_icon.svg"
                 className="dragger-img"
                 style={{ position: 'relative', right: '10px' }}
             />

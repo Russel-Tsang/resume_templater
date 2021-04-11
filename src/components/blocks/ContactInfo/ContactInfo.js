@@ -8,12 +8,12 @@ const ContactInfo = (props) => {
         <div 
             className={`${props.typeOfBlock} block`} 
             style={props.blockStyle}
-            onMouseOver={() => props.borderProps.setBorder(true)}
-            onMouseLeave={() => props.borderProps.setBorder(false)}
+            onMouseOver={props.onMouseOver}
+            onMouseLeave={props.onMouseLeave}
         >
-            <input className={props.borderProps.getClass} value={address} onClick={props.borderProps.setInputToActive} onChange={(e) => props.onResumeEdit('address')(e.target.value)}/>
-            <input className={props.borderProps.getClass} value={email} onClick={props.borderProps.setInputToActive} onChange={(e) => props.onResumeEdit('email')(e.target.value)}/>
-            <input className={props.borderProps.getClass} value={phoneNumber} onClick={props.borderProps.setInputToActive} onChange={(e) => props.onResumeEdit('phoneNumber')(e.target.value)}/>
+            <input className={props.className} value={address} onClick={props.onInputClick} onChange={(e) => props.onResumeEdit('address')(e.target.value)}/>
+            <input className={props.className} value={email} onClick={props.onInputClick} onChange={(e) => props.onResumeEdit('email')(e.target.value)}/>
+            <input className={props.className} value={phoneNumber} onClick={props.onInputClick} onChange={(e) => props.onResumeEdit('phoneNumber')(e.target.value)}/>
         </div>
     );
 }

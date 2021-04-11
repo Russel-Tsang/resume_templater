@@ -6,11 +6,11 @@ const ItemTitleWithDate = (props) => {
         <div 
             className={`${props.typeOfBlock} block`} 
             style={props.blockStyle}
-            onMouseOver={() => props.borderProps.setBorder(true)}
-            onMouseLeave={() => props.borderProps.setBorder(false)}
+            onMouseOver={props.onMouseOver}
+            onMouseLeave={props.onMouseLeave}
         >
-            <input className={`item-title ${props.borderProps.getClass}`} value={props.itemTitle} onClick={props.borderProps.setInputToActive} onChange={(e) => props.onResumeEdit('itemTitle')(e.target.value)} />
-            <input className={`date ${props.borderProps.getClass}`} value={props.date} onClick={props.borderProps.setInputToActive} onChange={(e) => props.onResumeEdit('date')(e.target.value)} />
+            <input className={`item-title ${props.className}`} value={props.itemTitle} onClick={props.onInputClick} onChange={(e) => props.onResumeEdit('itemTitle')(e.target.value)} />
+            <input className={`date ${props.className}`} value={props.date} onClick={props.onInputClick} onChange={(e) => props.onResumeEdit('date')(e.target.value)} />
         </div>
     );
 }

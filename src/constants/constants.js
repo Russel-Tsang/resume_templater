@@ -43,3 +43,15 @@ export const InputFieldLabels = {
     ITEM_CAPTION_LBL: 'Item Caption',
     BULLET_POINT_LBL: 'Bullet Point'
 }
+
+export const TemplaterStateTypes = {
+    SWITCH_BLOCKS: 'switch-blocks',
+    DRAGGER_MOUSE_DOWN: 'dragger-mouse-down',
+    DRAGGER_MOUSE_UP: 'dragger-mouse-up',
+    BLOCK_DROPPED: 'block-dropped',
+    RESUME_TEXT_CHANGE: 'resume-text-change',
+    SET_BORDER: 'set-border',
+    SET_INPUT_TO_ACTIVE: 'set-input-to-active',
+    ADD_BLOCK: 'add-block',
+    OPEN_MODAL: 'open-modal',
+}

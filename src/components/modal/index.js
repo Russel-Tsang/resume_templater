@@ -30,7 +30,6 @@ const Modal = (props) => {
         let inputFieldStates = _deepCloneInputFieldStates();
         inputFieldStates[selectedBlockType][field] = e.target.value;
         _setInputFieldStates(inputFieldStates);
-        console.log(inputFieldStates)
     }
 
     const selectBlock = (blockType) => {
@@ -72,7 +71,7 @@ const Modal = (props) => {
 
     const onModalSubmit = (e) => {
         e.preventDefault();
-        props.onModalSubmit(selectedBlockType, inputFieldStates[selectedBlockType]);
+        props.onModalSubmit({ selectedBlockType, blockFields: inputFieldStates[selectedBlockType] });
 
     }
 

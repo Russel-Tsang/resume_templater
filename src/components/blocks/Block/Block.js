@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const Block = (props) => {
     if (props.isDragging) { console.log('isNull'); return null;}
@@ -6,15 +6,14 @@ const Block = (props) => {
         <div 
             className={`${props.typeOfBlock} block`} 
             style={props.blockStyle} 
-            onMouseOver={() => props.borderProps.setBorder(true)} 
-            onMouseLeave={() => props.borderProps.setBorder(false)}
+            onMouseOver={props.onMouseOver} 
+            onMouseLeave={props.onMouseLeave}
         >
-            {/* {props.value} */}
             <input 
                 key={props.key} 
-                className={props.borderProps.getClass}
+                className={props.className}
                 value={props.value}
-                onClick={props.borderProps.setInputToActive}
+                onClick={props.onInputClick}
                 onChange={(e) => props.onResumeEdit('text')(e.target.value)} 
             />
         </div>
