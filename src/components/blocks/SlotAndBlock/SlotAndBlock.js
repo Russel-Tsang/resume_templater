@@ -1,12 +1,15 @@
 import React from 'react';
-// import Slot from '../blocks/Slot';
-// import Name from '../blocks/Name';
+import styled from 'styled-components';
+
+const SlotAndBlockContainer = styled.div`
+    position: relative;
+`;
 
 const SlotAndBlock = (props) => {
     return ( 
-        <div className="slot-and-block" style={props.dropWrapStyle}>
+        <SlotAndBlockContainer style={props.dropWrapStyle}>
             {props.children}
-        </div>
+        </SlotAndBlockContainer>
     );
 }
  

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Block = (props) => {
-    if (props.isDragging) { console.log('isNull'); return null;}
+    if (props.isDragging) { return null;}
     return (
         <div 
             className={`${props.typeOfBlock} block`} 

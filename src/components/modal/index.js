@@ -1,9 +1,121 @@
 import React, { useState } from 'react';
 import { BlockTypes, BlockLabels, InputFieldLabels } from '@constants';
+import styled from 'styled-components';
 
 const { NAME, CONTACT_INFO, SECTION_TITLE, ITEM_TITLE_WITH_DATE, ITEM_CAPTION, BULLET_POINT, SPACE_BLOCK } = BlockTypes;
 const { FULL_NAME_LBL, ADDRESS_LBL, EMAIL_LBL, PHONE_NUMBER_LBL, SECTION_TITLE_LBL, ITEM_TITLE_LBL, DATE_LBL, ITEM_CAPTION_LBL, BULLET_POINT_LBL } = InputFieldLabels;
 
+const ModalBackground = styled.div`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,.4);
+    top: 0;
+    z-index: 1;
+`;
+
+const Form = styled.form`
+    height: 400px; 
+    width: 600px; 
+    background-color: white; 
+    display: flex; 
+    flex-direction: column;
+`;
+
+const ModalHeader = styled.header`
+    font-size: 28px;
+    height: 80px; 
+    background-color: #fafafa; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+`;
+
+const ModalBody = styled.section`
+    height: 100%;
+    padding: 0 50px; 
+
+    display: grid;
+    grid-template-rows: 40px auto 70px;
+`;
+
+const InputContainer = styled.section`
+    grid-row: 2/3;
+    display: flex;
+    flex-direction: column;
+
+    input {
+        max-height: 60px;
+        font-size: 16px;
+        width: 75%;
+        margin-top: 40px;
+        border-bottom: 1px gray solid;
+        padding: 5px 0px;
+    }
+
+    input:first-child {
+        margin-top: 20px;
+    }
+`;
+
+const SubmitButton = styled.button`
+    grid-row: 3/4;
+    width: 200px;
+    background-color: #009dff;
+    color: white;
+    font-size: 16px;
+    margin-bottom: 20px;
+`;
+
+const EditBlockTypeSection = styled.div`
+    display: flex;
+    grid-row: 1/2;
+    margin-top: 20px;
+`;
+
+const Label = styled.label`
+    width: 90px;
+`;
+
+const EditBlockTypeInputContainer = styled.div`
+    position: relative;
+    width: 100%;
+
+    > * {
+        width: 100%;
+    }
+`;
+
+const EditBlockTypeButton = styled.div`
+    font-size: 16px;
+    text-align: left;
+    background: none;
+    border: none;
+    border-bottom: 1px black solid;
+    width: 200px;
+`;
+
+const BlockTypeOptionsContainer = styled.div`
+    border: 1px black solid;
+    cursor: pointer;
+    position: absolute;
+    background: white;
+    width: 200px;
+`;
+
+const BlockTypeOptionsList = styled.ul`
+    li {
+        padding: 2px 0px;
+        padding-left: 6px;
+    }
+
+    li:hover {
+        background-color: #F2F3F4;
+    }
+`;
 
 const Modal = (props) => {
     const [settingBlockType, setSettingBlockType] = useState(false);
@@ -38,8 +150,8 @@ const Modal = (props) => {
     }
 
     const blockTypeOptions = (
-        <div className="block-type-options-div">
-            <ul className="block-type-options-list">
+        <BlockTypeOptionsContainer>
+            <BlockTypeOptionsList>
                 <li onClick={() => selectBlock(NAME)}>{BlockLabels[NAME]}</li>
                 <li onClick={() => selectBlock(CONTACT_INFO)}>{BlockLabels[CONTACT_INFO]}</li>
                 <li onClick={() => selectBlock(SECTION_TITLE)}>{BlockLabels[SECTION_TITLE]}</li>
@@ -47,8 +159,8 @@ const Modal = (props) => {
                 <li onClick={() => selectBlock(ITEM_CAPTION)}>{BlockLabels[ITEM_CAPTION]}</li>
                 <li onClick={() => selectBlock(BULLET_POINT)}>{BlockLabels[BULLET_POINT]}</li>
                 <li onClick={() => selectBlock(SPACE_BLOCK)}>{BlockLabels[SPACE_BLOCK]}</li>
-            </ul>
-        </div>
+            </BlockTypeOptionsList>
+        </BlockTypeOptionsContainer>
     )
 
     const inputFields = {
@@ -76,33 +188,33 @@ const Modal = (props) => {
     }
 
     return ( 
-        <div className="modal-background" style={{ display: props.modalOpen ? 'flex' : 'none' }}>
-            <form onSubmit={ onModalSubmit }>
-                <header className="modal-header">
+        <ModalBackground style={{ display: props.modalOpen ? 'flex' : 'none' }}>
+            <Form onSubmit={ onModalSubmit }>
+                <ModalHeader>
                     <h1>Add block</h1>
-                </header>
-                <section className="modal-body">
-                    <div className="edit-block-type-section">
-                        <label htmlFor="edit-block-type">Block type: </label>
-                        <div className="edit-block-type-input-container">
-                            <button className="edit-block-type" 
+                </ModalHeader>
+                <ModalBody>
+                    <EditBlockTypeSection>
+                        <Label htmlFor="edit-block-type">Block type: </Label>
+                        <EditBlockTypeInputContainer>
+                            <EditBlockTypeButton
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setSettingBlockType(true);
                                 }}
                             >
                                 {BlockLabels[selectedBlockType]}
-                            </button>
+                            </EditBlockTypeButton>
                             {settingBlockType && blockTypeOptions}
-                        </div>
-                    </div>
-                    <div className="input-container">
+                        </EditBlockTypeInputContainer>
+                    </EditBlockTypeSection>
+                    <InputContainer>
                         {inputFields[selectedBlockType]}
-                    </div>
-                    <button type="submit">Add Block</button>
-                </section>
-            </form>
-        </div>
+                    </InputContainer>
+                    <SubmitButton type="submit">Add Block</SubmitButton>
+                </ModalBody>
+            </Form>
+        </ModalBackground>
     );
 }
  
