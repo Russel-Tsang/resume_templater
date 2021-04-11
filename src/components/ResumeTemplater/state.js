@@ -4,24 +4,8 @@ import { TemplaterStateTypes } from '@constants';
 
 const { DRAGGER_MOUSE_DOWN, DRAGGER_MOUSE_UP, BLOCK_DROPPED, RESUME_TEXT_CHANGE, SET_BORDER, SET_INPUT_TO_ACTIVE, ADD_BLOCK, OPEN_MODAL } = TemplaterStateTypes;
 
-function setInputToActive(idx, borderClasses) {
-    return () => {
-        let newBorderClasses = JSON.parse(JSON.stringify(borderClasses));
-
-        // if an input is currently active, remove the border from that input
-        if (newBorderClasses.currentActiveIndex !== null) newBorderClasses.state[newBorderClasses.currentActiveIndex] = "";
-
-        // add border to the newly selected input and set it as currently active index
-        newBorderClasses.state[idx] = "show-border";
-        newBorderClasses.currentActiveIndex = idx;
-
-        return newBorderClasses;
-    }
-}
-
 const reducer = (state, { type, payload }) => {
     const { dragAndDropIndices: { draggingBlockIdx, slotIdx }, borderClasses } = state;
-
     switch (type) {
         case DRAGGER_MOUSE_DOWN: {
             return {
@@ -47,7 +31,6 @@ const reducer = (state, { type, payload }) => {
             return {
                 ...state,
                 resume: newResume,
-                ...( borderClasses.currentActiveIndex === draggingBlockIdx && setInputToActive(slotIdx)(borderClasses)()),
                 canDragState: false,
                 dragAndDropIndices: {
                     draggingBlockIdx: null,

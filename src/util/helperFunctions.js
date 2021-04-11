@@ -29,13 +29,16 @@ export const useComponentFor = function() {
 
     return {
         componentFor(blockOptions, idx) {
-            const { BLOCK_DROPPED } = TemplaterStateTypes;
+            const { BLOCK_DROPPED, SET_INPUT_TO_ACTIVE } = TemplaterStateTypes;
         
             return (
                 <SlotAndBlock
                     key={idx}
                     acceptType={ItemTypes.BLOCK}
-                    dropAction={() => templaterDispatch({ type: BLOCK_DROPPED, payload: { idx } })}
+                    dropAction={() => {
+                        templaterDispatch({ type: BLOCK_DROPPED, payload: { idx } });
+                        templaterDispatch({ type: SET_INPUT_TO_ACTIVE, payload: { idx } });
+                    }}
                     dropWrapStyle={BlockStyles[blockOptions.type]}
                     typeOfBlock={blockOptions.type}
                 >
